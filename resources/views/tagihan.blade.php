@@ -58,8 +58,9 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="javascript:void(0)" class="btn btn-success bayar" data-id="{{ $item->id }}"><i data-feather="check" class="feather-icon"></i></a>
-                                            <a href="https://api.whatsapp.com/send?phone=6287834099599&text=Informasi%20Tagihan%20Kos%0A%20%20%20%20%20%20%20%20%0ANama%3A%20{{$item->nama}}%0AJumlah%20Tagihan%3A%20{{$item->tagihan}}%2C000%20%0ABatas%20Akhir%20Pembayaran%3A%20{{$item->deadline}}%0A%0APesan%20ini%20tidak%20perlu%20dibalas" class="btn btn-primary deletePenghuni" data-id=""><i data-feather="external-link" class="feather-icon"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-success lanjut" data-id="{{ $item->id }}"><i data-feather="check" class="feather-icon"></i></a>
+                                            <a href="https://api.whatsapp.com/send?phone=6287834099599&text=Informasi%20Tagihan%20Kos%0A%20%20%20%20%20%20%20%20%0ANama%3A%20{{$item->nama}}%0AJumlah%20Tagihan%3A%20{{$item->tagihan}}%2C000%20%0ABatas%20Akhir%20Pembayaran%3A%20{{$item->deadline}}%0A%0APesan%20ini%20tidak%20perlu%20dibalas" class="btn btn-primary deletePenghuni" data-id=""><i data-feather="send" class="feather-icon"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-danger bayar" data-id="{{ $item->id }}"><i data-feather="x-circle" class="feather-icon"></i></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -104,7 +105,7 @@
                 url: "{{url('bayar')}}",
                 data: {
                     'id': id,
-                    'tgl_bayar' : today,
+                    'tgl_bayar': today,
                     _token: '{{csrf_token()}}',
                 },
                 dataType: 'json',
@@ -113,6 +114,40 @@
                     Swal.fire({
                         icon: 'success',
                         title: 'Pembayaran Berhasil',
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    setTimeout(location.reload.bind(location), 1000);
+                },
+                error: function(data, textStatus, errorThrown) {
+                    console.log(data);
+
+                }
+            });
+        })
+
+        $('body').on('click', '.lanjut', function() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            var id = $(this).data('id');
+            $.ajax({
+                type: "POST",
+                url: "{{url('lanjut')}}",
+                data: {
+                    'id': id,
+                    'tgl_bayar': today,
+                    _token: '{{csrf_token()}}',
+                },
+                dataType: 'json',
+                success: function(data) {
+                    // console.log(data);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Aksi Berhasil',
                         showConfirmButton: false,
                         timer: 1000
                     })

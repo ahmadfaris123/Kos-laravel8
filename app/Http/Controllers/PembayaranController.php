@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tagihan;
+use App\Models\Penghuni;
 
 class PembayaranController extends Controller
 {
@@ -75,18 +76,28 @@ class PembayaranController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function lanjut(Request $request)
+    {  
+        $dataa =  Tagihan::find($request->id);
+        $idp = Penghuni::select('lama_sewa')->where('id', $dataa ->id_penghuni)->get();
+        $lama = $idp[0]['lama_sewa'];
+        $date1 = date("Y-m-d", strtotime($request->tgl_bayar." +$lama months"));
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+        $tagihan = Tagihan::create([
+            'id_penghuni' => $dataa ->id_penghuni,
+            'tagihan' => $dataa ->tagihan,
+            'deadline' => $date1,
+            'tgl_bayar' => $date1,
+            'status' => 0
+        ]);
+
+        $bayar   =   Tagihan::find($request->id);
+        $bayar->status = 1;
+        $bayar->tgl_bayar = $request->tgl_bayar;
+        $bayar->save();
+
+        return response()->json(['success' => true]);
+    }
     public function update(Request $request)
     {
         $bayar   =   Tagihan::find($request->id);

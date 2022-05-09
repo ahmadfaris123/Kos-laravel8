@@ -49,3 +49,4 @@ Route::post('editPenghuni', [PenghuniController::class,'show'])->middleware('aut
 Route::post('updatePenghuni', [PenghuniController::class,'update'])->middleware('auth');
 Route::post('deletePenghuni', [PenghuniController::class,'destroy'])->middleware('auth');
 Route::post('bayar', [PembayaranController::class,'update'])->middleware('auth');
+Route::post('lanjut', [PembayaranController::class,'lanjut'])->middleware('auth');
