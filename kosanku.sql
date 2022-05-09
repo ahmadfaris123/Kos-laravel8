@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 23 Apr 2022 pada 17.02
+-- Waktu pembuatan: 09 Bulan Mei 2022 pada 14.13
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 8.0.15
 
@@ -90,9 +90,9 @@ CREATE TABLE `kamar` (
 
 INSERT INTO `kamar` (`id`, `no_kamar`, `fasilitas`, `harga`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'KM01', 'TV, Kasur, Meja', '750.000', 0, '2022-04-09 12:17:10', '2022-04-20 08:21:08'),
-(2, 'KM02', 'TV, Kasur, Meja', '750.000', 0, '2022-04-09 12:22:02', '2022-04-20 08:21:11'),
+(2, 'KM02', 'TV, Kasur, Meja', '750.000', 0, '2022-04-09 12:22:02', '2022-05-08 23:22:52'),
 (3, 'KM03', 'TV, Kasur, Meja', '750.000', 0, '2022-04-13 10:22:33', '2022-04-19 10:44:11'),
-(4, 'KM04', 'TV, Kasur, Meja', '750.000', 0, '2022-04-13 10:22:48', '2022-04-20 08:21:14'),
+(4, 'KM04', 'TV, Kasur, Meja', '750.000', 0, '2022-04-13 10:22:48', '2022-04-24 06:24:20'),
 (5, 'KM05', 'TV, Kasur, Meja', '750.000', 0, '2022-04-13 10:23:03', '2022-04-20 08:21:17');
 
 -- --------------------------------------------------------
@@ -115,11 +115,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(9, '2022_03_29_004031_create_penghuni_table', 3),
 (10, '2022_03_15_120303_create_kamar_table', 4),
 (13, '2022_04_12_165448_create_bulan_table', 6),
 (14, '2022_04_19_002458_create_tagihan_table', 7),
-(15, '2014_10_12_000000_create_users_table', 8);
+(15, '2014_10_12_000000_create_users_table', 8),
+(16, '2022_03_29_004031_create_penghuni_table', 9);
 
 -- --------------------------------------------------------
 
@@ -148,7 +148,8 @@ CREATE TABLE `penghuni` (
   `tgl_masuk` date NOT NULL,
   `lama_sewa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -207,7 +208,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$HQo1r7idpjf/6obiQldPnOo3koVZBwtkM4CE4ATUcBsGYOvzg3/Ga', 'kquPKzq8Uw9ht5LHCqeQVIUuNK6bNbh9hCLD2u8mjc0Dmd6dpICSfureited', NULL, NULL);
+(1, 'admin', 'admin@admin.com', '$2y$10$HQo1r7idpjf/6obiQldPnOo3koVZBwtkM4CE4ATUcBsGYOvzg3/Ga', 'MOWwg9HOu7ppM0sQemHB4sONJ5SDg7V6B4jFD571PFxGK93ZCjiKiviCC9xN', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -297,13 +298,13 @@ ALTER TABLE `kamar`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `penghuni`
 --
 ALTER TABLE `penghuni`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -315,7 +316,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT untuk tabel `tagihan`
 --
 ALTER TABLE `tagihan`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
