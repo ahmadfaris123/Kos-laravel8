@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tagihan;
 use App\Models\Penghuni;
+use App\Models\Kamar;
 
 class PembayaranController extends Controller
 {
@@ -100,6 +101,15 @@ class PembayaranController extends Controller
     }
     public function update(Request $request)
     {
+        $data1 = Tagihan::find($request->id);
+        $kmr = Penghuni::select('id_kamar')->where('id', $data1 ->id_penghuni)->first();
+        $kamar   =   Kamar::find($kmr->id_kamar);
+        $kamar->status = 0;
+        $kamar->save();
+
+        $penghuni = Penghuni::find($data1->id_penghuni);
+        $penghuni->delete();
+
         $bayar   =   Tagihan::find($request->id);
         $bayar->status = 1;
         $bayar->tgl_bayar = $request->tgl_bayar;

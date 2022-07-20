@@ -13,7 +13,9 @@ class DashboardController extends Controller
         $kamark = DB::table('kamar')
                     ->where('status', 0)
                     ->count();
-        $penghuni = DB::table('penghuni')->count();
+        $penghuni = DB::table('penghuni')
+                    ->where('deleted_at', null)
+                    ->count();
         $bayar0 = DB::table('tagihan')
                     ->where('status', 0)
                     ->count();
